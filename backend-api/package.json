@@ -1,40 +1,40 @@
 {
-	"author": "Abu AbdirRahman",
-	"dependencies": {
-		"@supabase/supabase-js": "^2.57.4",
-		"argon2": "^0.43.1",
-		"compression": "^1.8.1",
-		"cors": "^2.8.5",
-		"dotenv": "^17.2.1",
-		"express": "^5.1.0",
-		"express-rate-limit": "^8.0.1",
-		"helmet": "^8.1.0",
-		"morgan": "^1.10.1",
-		"nodemailer": "^7.0.5",
-		"zod": "^4.1.5"
-	},
-	"description": "KCS-2.0 Backend API",
-	"devDependencies": {
-		"@biomejs/biome": "2.2.2",
-		"@types/compression": "^1.8.1",
-		"@types/cors": "2.8.19",
-		"@types/express": "5.0.3",
-		"@types/morgan": "1.9.10",
-		"@types/node": "24.5.2",
-		"@types/nodemailer": "7.0.1",
-		"nodemon": "^3.1.10",
-		"ts-node": "^10.9.1",
-		"tsconfig-paths": "^4.2.0",
-		"typescript": "^5.3.3"
-	},
-	"keywords": [],
-	"license": "ISC",
-	"main": "dist/src/index.js",
-	"name": "backend-api",
-	"scripts": {
-		"db:generate": "pnpx supabase gen types typescript --project-id glzgsechofthipuinqfo > src/types/database.ts",
-		"start": "ts-node src/index.ts",
-		"dev": "ts-node src/index.ts"
-	},
-	"version": "1.0.0"
+  "author": "Abu AbdirRahman",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.57.4",
+    "argon2": "^0.43.1",
+    "compression": "^1.8.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.0.1",
+    "helmet": "^8.1.0",
+    "morgan": "^1.10.1",
+    "nodemailer": "^7.0.5",
+    "zod": "^4.1.5"
+  },
+  "description": "KCS-2.0 Backend API",
+  "devDependencies": {
+    "@biomejs/biome": "2.2.2",
+    "@types/compression": "^1.8.1",
+    "@types/cors": "2.8.19",
+    "@types/express": "5.0.3",
+    "@types/morgan": "1.9.10",
+    "@types/node": "24.5.2",
+    "@types/nodemailer": "7.0.1",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.3.3"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "main": "dist/src/index.js",
+  "name": "backend-api",
+  "scripts": {
+    "db:generate": "pnpx supabase gen types typescript --project-id glzgsechofthipuinqfo > src/types/database.ts",
+    "start": "node init && ts-node src/index.ts",
+    "dev": "node init && ts-node src/index.ts"
+  },
+  "version": "1.0.0"
 }
