@@ -40,7 +40,7 @@ export const studentSignup = async (req: Request, res: Response) => {
 		const { data: student, error: insertError } = await db
 			.from("students")
 			.insert({
-				matric_number: matricNumber.trim(),
+				matric_number: matricNumber.toLowerCase().trim(),
 				surname: surname.trim().toLowerCase(),
 				level,
 				semester,
@@ -67,7 +67,7 @@ export const studentLogin = async (req: Request, res: Response) => {
 		const { data: students, error } = await db
 			.from("students")
 			.select("*")
-			.eq("matric_number", matricNumber)
+			.eq("matric_number", matricNumber.toLowerCase())
 
     // ✅ Handle errors from Supabase
     if (error) throw new AppError(error.message);
@@ -124,7 +124,7 @@ export const lecturerSignUp = async (req: Request, res: Response) => {
 		const { data: existingLecturer, error: existingError } = await db
 			.from("lecturers")
 			.select("id")
-			.eq("lecturer_id", lecturerId)
+			.eq("lecturer_id", lecturerId.toLowerCase())
 			.maybeSingle();
 
 		if (existingError)
@@ -140,7 +140,7 @@ export const lecturerSignUp = async (req: Request, res: Response) => {
 		const { data: newLecturer, error: lecturerError } = await db
 			.from("lecturers")
 			.insert({
-				lecturer_id: lecturerId,
+				lecturer_id: lecturerId.toLowerCase(),
 				password: passwordHash,
 				courses,
 				level,
@@ -180,13 +180,27 @@ export const lecturerLogin = async (req: Request, res: Response) => {
 			req.body,
 		);
 
-		const { data: lecturer, error } = await db
+		const { data: lecturers, error } = await db
 			.from("lecturers")
 			.select("*")
-			.eq("lecturer_id", lecturerId)
-			.single();
+			.eq("lecturer_id", lecturerId.toLowerCase())
 
-		if (error) throw new AppError(error.message);
+		// ✅ Handle errors from Supabase
+    if (error) throw new AppError(error.message);
+
+    // ✅ Handle no records
+    if (!lecturers || lecturers.length === 0)
+      throw new AppError("lecturer not found", 404);
+
+    // ✅ Handle duplicate records gracefully
+    if (lecturers.length > 1) {
+      console.warn(`⚠ Duplicate lecturer records found for ${lecturerId}-> ${lecturers}`);
+		}
+
+      // Option 1 — pick the latest (assuming "created_at" exists)
+      const lecturer = lecturers[0];
+
+		if (error) throw new AppError(error);
 		if (!lecturer) throw new AppError(`No Lecturer with id: ${lecturerId}`);
 
 		const validPassword = await verify(lecturer.password, password);
